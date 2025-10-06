@@ -26,27 +26,16 @@ jobs:
           echo "PR version: $PR_VERSION"
           echo "Main version: $MAIN_VERSION"
 
-          # Quebrar em major.minor.patch
           IFS='.' read -r PR_MAJOR PR_MINOR PR_PATCH <<< "$PR_VERSION"
           IFS='.' read -r MAIN_MAJOR MAIN_MINOR MAIN_PATCH <<< "$MAIN_VERSION"
 
-          # Função para contar diferenças
-          DIFF_COUNT=0
-          if [ "$PR_MAJOR" -ne "$MAIN_MAJOR" ]; then DIFF_COUNT=$((DIFF_COUNT + 1)); fi
-          if [ "$PR_MINOR" -ne "$MAIN_MINOR" ]; then DIFF_COUNT=$((DIFF_COUNT + 1)); fi
-          if [ "$PR_PATCH" -ne "$MAIN_PATCH" ]; then DIFF_COUNT=$((DIFF_COUNT + 1)); fi
-
-          # Verifica se a versão do PR é maior
-          VERSION_BIGGER=false
-          if [ "$PR_MAJOR" -gt "$MAIN_MAJOR" ] || 
-            [ "$PR_MAJOR" -eq "$MAIN_MAJOR" ] && [ "$PR_MINOR" -gt "$MAIN_MINOR" ] ||
-            [ "$PR_MAJOR" -eq "$MAIN_MAJOR" ] && [ "$PR_MINOR" -eq "$MAIN_MINOR" ] && [ "$PR_PATCH" -gt "$MAIN_PATCH" ]; then
-              VERSION_BIGGER=true
-          fi
-
-          if [ "$VERSION_BIGGER" = true ] && [ "$DIFF_COUNT" -eq 1 ]; then
-              echo "✅ Version was updated correctly (only one number increased)."
+          if [ "$PR_MAJOR" -eq $((MAIN_MAJOR + 1)) ] && [ "$PR_MINOR" -eq 0 ] && [ "$PR_PATCH" -eq 0 ]; then
+              echo "✅ Major version bumped correctly."
+          elif [ "$PR_MAJOR" -eq "$MAIN_MAJOR" ] && [ "$PR_MINOR" -eq $((MAIN_MINOR + 1)) ] && [ "$PR_PATCH" -eq 0 ]; then
+              echo "✅ Minor version bumped correctly."
+          elif [ "$PR_MAJOR" -eq "$MAIN_MAJOR" ] && [ "$PR_MINOR" -eq "$MAIN_MINOR" ] && [ "$PR_PATCH" -eq $((MAIN_PATCH + 1)) ]; then
+              echo "✅ Patch version bumped correctly."
           else
-              echo "❌ Version in package.json is invalid. Must increase exactly one number from main and be greater than main."
+              echo "❌ Invalid version bump! You can only increment one number at a time according to SemVer rules."
               exit 1
           fi
