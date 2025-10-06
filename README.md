@@ -2,6 +2,11 @@
 
 Generate JWT tokens with both symmetric (HMAC) and asymmetric (RSA/ECDSA) algorithms directly in Insomnia.
 
+## Informations
+
+It's a simple code that uses jwt.sign() to encode information. Nothing will be saved on the web; everything will run locally on your computer.
+You can see the code in my github: https://github.com/lorenzomlazzarin/insomnia-plugin-jwt-encoder
+
 ## Algorithms
 
 - 🔐 **Asymmetric JWT**: Generate JWTs using RSA and ECDSA algorithms
@@ -43,7 +48,7 @@ After that, you need to click on the tag, and a box will appear. The information
 
 #### Asymmetric JWT
 
-1. check the algorithm selected.
+1. check the algorithm selected. [i can't find algorithm](#cant-find-the-algorithm)
 2. Add any additional fields you want in the header, in addition to `alg` and `typ`. If you don't add anything, it will only be the two fields.
 3. Set expiration time (e.g., "1h", "30m", "7d")
 4. Add your payload (JSON format), without the `exp` attribute
@@ -60,7 +65,7 @@ After that, you need to click on the tag, and a box will appear. The information
 ![illustrative image](./assets/exemple-asymmetric/with_headers/decode.png)
 
 #### Symmetric JWT
-1. check the algorithm selected.
+1. check the algorithm selected. [i can't find algorithm](#cant-find-the-algorithm)
 2. Add any additional fields you want in the header, in addition to `alg` and `typ`. If you don't add anything, it will only be the two fields.
 3. Set expiration time (e.g., "1h", "30m", "7d")
 4. Add your payload (JSON format), without the "exp" attribute
@@ -69,7 +74,7 @@ After that, you need to click on the tag, and a box will appear. The information
 ### Important
 
 1. Only the `header` section is optional.
-2. You can put this tag in ony tab of insomnia.
+2. You can put this tag in any tab of insomnia.
 3. You can only see the algorithm options for the type you are using. If you are using asymmetric algorithms and want to switch to symmetric algorithms, change the `function to perform` option.
 ![illustrative image](./assets/important-section/change-types.png)
 4. If any important information is missing, the "Live Preview" section will display messages for you.
@@ -79,3 +84,6 @@ After that, you need to click on the tag, and a box will appear. The information
 
 #### don't appear options:
 Look in the `Application > Preferences > Plugins` if `insomnia-plugin-jwt-encoder` appears in the section `Plugins` with green check.
+
+#### can't find the algorithm:
+Please, look the 3° tópic of [Important](#important).

@@ -1,0 +1,41 @@
+name: Check package version bump
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-version:
+    name: Ensure package version was updated
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get current and previous versions
+        id: versions
+        run: |
+          PR_VERSION=$(jq -r .version package.json)
+          git fetch origin main
+          MAIN_VERSION=$(git show origin/main:package.json | jq -r .version)
+
+          echo "PR version: $PR_VERSION"
+          echo "Main version: $MAIN_VERSION"
+
+          IFS='.' read -r PR_MAJOR PR_MINOR PR_PATCH <<< "$PR_VERSION"
+          IFS='.' read -r MAIN_MAJOR MAIN_MINOR MAIN_PATCH <<< "$MAIN_VERSION"
+
+          if [ "$PR_MAJOR" -eq $((MAIN_MAJOR + 1)) ] && [ "$PR_MINOR" -eq 0 ] && [ "$PR_PATCH" -eq 0 ]; then
+              echo "✅ Major version bumped correctly."
+          elif [ "$PR_MAJOR" -eq "$MAIN_MAJOR" ] && [ "$PR_MINOR" -eq $((MAIN_MINOR + 1)) ] && [ "$PR_PATCH" -eq 0 ]; then
+              echo "✅ Minor version bumped correctly."
+          elif [ "$PR_MAJOR" -eq "$MAIN_MAJOR" ] && [ "$PR_MINOR" -eq "$MAIN_MINOR" ] && [ "$PR_PATCH" -eq $((MAIN_PATCH + 1)) ]; then
+              echo "✅ Patch version bumped correctly."
+          else
+              echo "❌ Invalid version bump! You can only increment one number at a time according to SemVer rules."
+              exit 1
+          fi
