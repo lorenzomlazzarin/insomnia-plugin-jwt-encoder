@@ -1,0 +1,42 @@
+{
+  "name": "insomnia-plugin-jwt-encoder",
+  "version": "1.0.0",
+  "description": "Generate JWT tokens with symmetric (HMAC) and asymmetric (RSA/ECDSA) algorithms for Insomnia",
+  "main": "main.js",
+  "keywords": [
+    "insomnia-plugin",
+    "jwt",
+    "json-web-token",
+    "hmac",
+    "rsa",
+    "ecdsa",
+    "symmetric",
+    "asymmetric",
+    "authentication",
+    "security"
+  ],
+  "author": {
+    "name": "lorenzomlazzarin",
+    "email": "lorenzolazzarin01@gmail.com.br"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lorenzomlazzarin/insomnia-plugin-jwt-encoder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lorenzomlazzarin/insomnia-plugin-jwt-encoder/issues"
+  },
+  "homepage": "https://github.com/lorenzomlazzarin/insomnia-plugin-jwt-encoder#readme",
+  "insomnia": {
+    "name": "JWT Encoder",
+    "displayName": "JWT Encoder",
+    "description": "Generate JWT tokens with symmetric (HMAC) and asymmetric (RSA/ECDSA) algorithms"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
