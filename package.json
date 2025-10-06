@@ -1,6 +1,6 @@
 {
   "name": "insomnia-plugin-jwt-encoder",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "Generate JWT tokens with symmetric (HMAC) and asymmetric (RSA/ECDSA) algorithms for Insomnia",
   "main": "main.js",
   "keywords": [
